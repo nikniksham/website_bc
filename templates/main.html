@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <title>{{title}}</title>
-    {% block head %}{% endblock %}
-</head>
+{% extends "base.html"%}
 
-<body>
-
-<div class="navigation">
-    <div class="navigation-hrefs">
+{% block main %}
+<div class="container">
+    <div class="main-block">
+        <img src="static/img/start_img.jpg" alt="Коля славливает ошибку, которой в теории быть не могло"/>
+        {% block pageblock %}{% endblock %}
     </div>
 </div>
-
-<header>
-    {% block header %}{% endblock %}
-    <div id="nav-icon2">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</header>
-
-<div class="main-block">
-    <img src="static/img/start_img.jpg" alt="Коля славливает ошибку, которой в теории быть не могло"/>
-    {% block pageblock %}{% endblock %}
-</div>
-
-<footer>
-</footer>
-
-</body>
-</html>
+{% endblock%}

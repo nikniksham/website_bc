@@ -22,13 +22,6 @@ standard_params = {}
 
 
 # Всё, что связано с юзером
-# Выход с аккаунта
-@application.route('/logout/')
-@login_required
-def logout_page():
-    logout_user()
-    return redirect("/")
-
 
 # Получение пользователя
 @login_manager.user_loader
@@ -47,9 +40,23 @@ def main(port=8000):
     application.run(port=port)
 
 
+# Выход с аккаунта
+@application.route('/logout/')
+@login_required
+def logout_page():
+    logout_user()
+    return redirect("/")
+
+
+# Страница с базовым шаблоном
+@application.route("/base")
+def base_page():
+    return get_render_template('base.html', title='Главная страница')
+
+
 # Стартовая страница
 @application.route("/")
-def website_main_page():
+def main_page():
     return get_render_template('main.html', title='Главная страница')
 
 
