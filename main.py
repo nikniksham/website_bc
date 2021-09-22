@@ -1,16 +1,57 @@
-# This is a sample Python script.
+import datetime
+import os
+from flask import Flask, render_template, url_for, request, send_from_directory
+from flask_login import LoginManager, login_required, logout_user, current_user, login_user
+from flask_sitemap import Sitemap
+from werkzeug.utils import redirect
+from werkzeug.utils import secure_filename
+import config
+from data import db_session
+from data.admin import Admin
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+ALLOWED_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg']
+application = Flask(__name__)
+ext = Sitemap(app=application)
+application.config.from_object(config)
+
+db_session.global_init("db/.sqlite")
+login_manager = LoginManager()
+login_manager.init_app(application)
+set_standard_params = True
+standard_params = {}
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Всё, что связано с юзером
+# Выход с аккаунта
+@application.route('/logout/')
+@login_required
+def logout_page():
+    logout_user()
+    return redirect("/")
 
 
-# Press the green button in the gutter to run the script.
+# Получение пользователя
+@login_manager.user_loader
+def load_user(admin_id):
+    session = db_session.create_session()
+    return session.query(Admin).get(admin_id)
+
+
+# Специальные функции
+def get_render_template(template, **kwargs):
+    return render_template(template, standard_params=standard_params, **kwargs)
+
+
+# Сайт и его страницы
+def main(port=8000):
+    application.run(port=port)
+
+
+# Стартовая страница
+@application.route("/")
+def website_main_page():
+    return get_render_template('main.html', title='Главная страница')
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main(port=80)

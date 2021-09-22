@@ -1,0 +1,7 @@
+import os
+
+SECRET_KEY = '\xbdg?\x98\x8c\xbf\xc9\xa2\xfe\x821\x17\xed\xdd\xcc\x9db\xdb&\xf7\xf2\xaf\xae\xa8i\xcd]\xd9\x0b\xfc'
+DEBUG = False
+TESTING = False
+UPLOAD_FOLDER = "static/img/"
+DATABASE = "db/.sqlite"
